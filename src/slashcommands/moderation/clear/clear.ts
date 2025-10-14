@@ -1,4 +1,5 @@
 import { MessageFlags, PermissionFlagsBits, EmbedBuilder, ChatInputCommandInteraction, Colors } from "discord.js";
+import { success_embed, error_embed } from "./../../../utils/embed/make_embed.ts";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     if (interaction.member == null) return;
@@ -11,7 +12,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) === false
     ) {
         return await interaction.reply({
-            embeds: [new EmbedBuilder().setTitle('このコマンドの実行にはチャンネルの管理権限が必要です。').setColor(Colors.Red)]
+            embeds: [(await error_embed("このコマンドの実行にはチャンネルの管理権限が必要です。"))]
         });
     }
 
@@ -41,7 +42,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         }
 
         await interaction.followUp({
-            content: 'メッセージを削除しました。',
+            embeds: [(await success_embed('メッセージを削除しました。'))],
             flags: MessageFlags.Ephemeral,
         });
     } catch (e) {
