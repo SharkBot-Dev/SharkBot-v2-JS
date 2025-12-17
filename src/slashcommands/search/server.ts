@@ -1,5 +1,5 @@
 import { EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
-import { success_embed } from "./../../utils/embed/make_embed.ts";
+import { success_embed } from "./../../utils/embed/make_embed.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();

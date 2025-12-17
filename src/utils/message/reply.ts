@@ -1,6 +1,6 @@
 import { Message, MessagePayload } from "discord.js";
 import type { MessageReplyOptions } from 'discord.js';
-import { mongo } from "../../temps/mongodb.ts";
+import { mongo } from "../../temps/mongodb.js";
 import { Long } from "mongodb";
 
 export async function reply(message: Message, payload: string | MessagePayload | MessageReplyOptions) {

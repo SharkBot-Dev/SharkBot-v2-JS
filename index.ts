@@ -1,14 +1,16 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import { connect } from "./src/temps/mongodb.ts";
+import { ShardingManager } from "discord.js";
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent],
+const manager = new ShardingManager("./dist/shard.js", {
+  token: process.env.DISCORD_TOKEN!,
+  totalShards: "auto",
+  respawn: true,
+  shardArgs: ["--color"],
 });
 
-await (await import('./src/load.ts')).load(client);
+manager.on("shardCreate", (shard) => {
+  console.log(`[Shard ${shard.id}] 起動`);
+});
 
-(async () => {
-  await connect();
-  console.log("MongoDB接続完了");
-  await client.login(process.env.TOKEN);
-})();
+await manager.spawn({
+  timeout: 30_000,
+});

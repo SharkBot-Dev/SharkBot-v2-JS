@@ -1,5 +1,5 @@
 import { Client, EmbedBuilder, Message, TextChannel, ThreadChannel } from "discord.js";
-import { mongo } from "../../temps/mongodb.ts";
+import { mongo } from "../../temps/mongodb.js";
 import { Long } from "mongodb";
 
 const COOLDOWN_TIME_EXPAND = 5;

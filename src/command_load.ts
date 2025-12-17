@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { commands } from "./temps/command.ts";
+import { commands } from "./temps/command.js";
 import { fileURLToPath, pathToFileURL } from "url";
-import { dynamicImport } from "./utils/import/dynamicImport.ts";
+import { dynamicImport } from "./utils/import/dynamicImport.js";
 
 export async function load() {
     const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +12,7 @@ export async function load() {
     const entries = fs.readdirSync(foldersPath, { withFileTypes: true });
 
     for (const entry of entries) {
-        if (entry.isFile() && (entry.name.endsWith(".ts"))) {
+        if (entry.isFile() && (entry.name.endsWith(".js"))) {
             const filePath = path.join(foldersPath, entry.name);
             const command = await dynamicImport(pathToFileURL(filePath).href);
 

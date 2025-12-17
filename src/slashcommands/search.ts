@@ -27,7 +27,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     if (!group) {
         try {
-            const commandPath = `./${interaction.commandName}/${sub}.ts`;
+            const commandPath = `./${interaction.commandName}/${sub}.js`;
             const subCommand = await import(commandPath);
 
             if (subCommand.execute) {
@@ -40,7 +40,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     }
 
 	try {
-		const commandPath = `./${interaction.commandName}/${group}/${sub}.ts`;
+		const commandPath = `./${interaction.commandName}/${group}/${sub}.js`;
 		const subCommand = await import(commandPath);
 
 		if (subCommand.execute) {

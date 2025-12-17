@@ -15,7 +15,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 	const sub = interaction.options.getSubcommand();
 
 	try {
-		const commandPath = `./${interaction.commandName}/${group}/${sub}.ts`;
+		const commandPath = `./${interaction.commandName}/${group}/${sub}.js`;
 		const subCommand = await import(commandPath);
 
 		if (subCommand.execute) {

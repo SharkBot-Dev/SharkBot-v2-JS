@@ -1,5 +1,5 @@
 import { MessageFlags, PermissionFlagsBits, EmbedBuilder, ChatInputCommandInteraction, Colors } from "discord.js";
-import { success_embed, error_embed } from "./../../../utils/embed/make_embed.ts";
+import { success_embed, error_embed } from "./../../../utils/embed/make_embed.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     if (interaction.member == null) return;

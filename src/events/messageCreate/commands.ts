@@ -1,6 +1,6 @@
 import { Client, Collection, Message } from "discord.js";
-import { commands, commands_cooldown } from "./../../temps/command.ts";
-import { error_embed } from "./../../utils/embed/make_embed.ts";
+import { commands, commands_cooldown } from "./../../temps/command.js";
+import { error_embed } from "./../../utils/embed/make_embed.js";
 
 export async function execute(message: Message, client: Client) {
     if (message.author.bot) return;

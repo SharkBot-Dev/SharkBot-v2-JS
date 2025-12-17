@@ -1,6 +1,6 @@
 import { Colors, ChatInputCommandInteraction, PermissionFlagsBits, MessageFlags } from "discord.js";
-import { success_embed, error_embed } from "./../../utils/embed/make_embed.ts";
-import { mongo } from "../../temps/mongodb.ts";
+import { success_embed, error_embed } from "./../../utils/embed/make_embed.js";
+import { mongo } from "../../temps/mongodb.js";
 import { Long } from "mongodb";
 
 export async function execute(interaction: ChatInputCommandInteraction) {

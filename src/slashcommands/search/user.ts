@@ -1,6 +1,6 @@
 import { EmbedBuilder, ChatInputCommandInteraction, Presence } from "discord.js";
-import { success_embed } from "./../../utils/embed/make_embed.ts";
-import bool_to_string from "./../../utils/bool_to_string.ts";
+import { success_embed } from "./../../utils/embed/make_embed.js";
+import bool_to_string from "./../../utils/bool_to_string.js";
 
 const status = {
     "online": "🟢オンライン",

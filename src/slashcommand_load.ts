@@ -1,7 +1,7 @@
 import { Client, Collection } from "discord.js";
 import fs from "fs";
 import path from "path";
-import { slash_commands } from "./temps/slashcommand.ts";
+import { slash_commands } from "./temps/slashcommand.js";
 import { fileURLToPath, pathToFileURL } from "url";
 
 export async function load() {
@@ -12,7 +12,7 @@ export async function load() {
     const entries = fs.readdirSync(foldersPath, { withFileTypes: true });
 
     for (const entry of entries) {
-        if (entry.isFile() && (entry.name.endsWith(".ts"))) {
+        if (entry.isFile() && (entry.name.endsWith(".js"))) {
             const filePath = path.join(foldersPath, entry.name);
             const command = await import(pathToFileURL(filePath).href);
 

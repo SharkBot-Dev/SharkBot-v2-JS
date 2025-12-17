@@ -1,5 +1,8 @@
 import pkg from "discord.js";
-const { REST, Routes, RESTPostAPIChatInputApplicationCommandsJSONBody } = pkg;
+const { REST, Routes } = pkg;
+
+import type { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
+
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
@@ -18,7 +21,7 @@ export async function load() {
 
             if (stat.isDirectory()) {
                 await loadCommands(fullPath);
-            } else if (file.endsWith(".ts") || file.endsWith(".js")) {
+            } else if (file.endsWith(".js")) {
                 try {
                     const modulePath = pathToFileURL(fullPath).href;
                     const commandModule = await import(modulePath);

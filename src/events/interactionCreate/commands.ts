@@ -1,7 +1,7 @@
 import { MessageFlags, ChatInputCommandInteraction, SlashCommandBuilder, Client } from "discord.js";
-import { slash_commands } from "./../../temps/slashcommand.ts";
+import { slash_commands } from "./../../temps/slashcommand.js";
 
-import { error_embed } from "./../../utils/embed/make_embed.ts";
+import { error_embed } from "./../../utils/embed/make_embed.js";
 
 type SlashCommand = {
     data: SlashCommandBuilder,

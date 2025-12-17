@@ -1,9 +1,9 @@
 import { Message, Client } from "discord.js";
 
-import { commands } from "./../temps/command.ts";
-import { dynamicImport } from "../utils/import/dynamicImport.ts";
+import { commands } from "./../temps/command.js";
+import { dynamicImport } from "../utils/import/dynamicImport.js";
 
-import { reply } from "../utils/message/reply.ts";
+import { reply } from "../utils/message/reply.js";
 
 export var data = {
     name: "command_reload",
@@ -15,7 +15,7 @@ export async function execute(message: Message, args: string[], client: Client) 
     }
 
     try {
-        const commandPath = `./../../commands/${args[0]}.ts`;
+        const commandPath = `./../../commands/${args[0]}.js`;
 
         if (commands.has(args[0])) {
             commands.delete(args[0]);

@@ -14,7 +14,7 @@ export async function load(client: Client) {
         const folderPath = path.join(eventsPath, folder);
         if (!fs.lstatSync(folderPath).isDirectory()) continue;
 
-        const eventFiles = fs.readdirSync(folderPath).filter(f => f.endsWith('.ts'));
+        const eventFiles = fs.readdirSync(folderPath).filter(f => f.endsWith('.js'));
         const eventName = folder;
 
         for (const file of eventFiles) {

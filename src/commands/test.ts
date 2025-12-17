@@ -1,5 +1,5 @@
 import { Message, Client } from "discord.js";
-import { reply } from "../utils/message/reply.ts";
+import { reply } from "../utils/message/reply.js";
 
 export var data = {
     name: "test",
