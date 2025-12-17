@@ -3,6 +3,8 @@ import { Message, Client } from "discord.js";
 import { commands } from "./../temps/command.ts";
 import { dynamicImport } from "../utils/import/dynamicImport.ts";
 
+import { reply } from "../utils/message/reply.ts";
+
 export var data = {
     name: "command_reload",
 }
@@ -26,10 +28,10 @@ export async function execute(message: Message, args: string[], client: Client) 
         const newCommand = newCommandModule;
         commands.set(args[0], newCommand);
 
-        await message.reply({ content: `コマンド **${args[0]}** をリロードしました。`});
+        await reply(message, { content: `コマンド **${args[0]}** をリロードしました。`});
 
     } catch (error) {
         console.error(`コマンドのリロード中にエラーが発生しました:`, error);
-        await message.reply({ content: `コマンドのリロードに失敗しました。` });
+        await reply(message, { content: `コマンドのリロードに失敗しました。`});
     }
 }

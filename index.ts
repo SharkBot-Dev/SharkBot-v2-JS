@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import mongoose from "mongoose";
+import { connect } from "./src/temps/mongodb.ts";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent],
@@ -8,7 +8,7 @@ const client = new Client({
 await (await import('./src/load.ts')).load(client);
 
 (async () => {
-  await mongoose.connect("mongodb://localhost:27017/Main");
+  await connect();
   console.log("MongoDB接続完了");
   await client.login(process.env.TOKEN);
 })();

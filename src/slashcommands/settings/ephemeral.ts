@@ -7,7 +7,6 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     if (interaction.member == null) return;
 
     const enabled = interaction.options.getBoolean("有効化するか", true);
-    const outside = interaction.options.getBoolean("外部からの展開を許可するか", false);
 
     const guildId = new Long(interaction.guildId as string);
 
@@ -21,24 +20,26 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         });
     }
 
-    const db = mongo.db("Main");
+    const db = mongo.db("MainTwo");
+    const collection = db.collection("EphemeralSetting");
 
     if (enabled) {
-        await db.collection("ExpandSettings").updateOne(
+        await collection.updateOne(
             { Guild: guildId },
-            { $set: { Guild: guildId, Enabled: enabled, Outside: outside } },
+            { $set: { Guild: guildId } },
             { upsert: true }
         );
-        const embed = await success_embed("メッセージ展開を有効化しました。")
+        const embed = await success_embed("コマンド実行時に実行者にしか見えなくしました。")
         await interaction.reply({ embeds: [embed] });
     } else {
-        await db.collection("ExpandSettings").updateOne(
-            { Guild: guildId },
-            { $set: { Guild: guildId, Enabled: enabled, Outside: outside } },
-            { upsert: true }
-        );
+        const result = await collection.deleteOne({ Guild: guildId });
 
-        const embed = await success_embed("メッセージ展開を無効化しました。")
+        if (result.deletedCount === 0) {
+            const embed = await error_embed("実行者にしか見えなくする機能は無効です。")
+            return await interaction.reply({ embeds: [embed] });
+        }
+
+        const embed = await success_embed("実行者以外も見えるようにしました。")
 
         await interaction.reply({ embeds: [embed] });
     }

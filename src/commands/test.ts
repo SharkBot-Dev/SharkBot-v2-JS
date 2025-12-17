@@ -1,9 +1,10 @@
 import { Message, Client } from "discord.js";
+import { reply } from "../utils/message/reply.ts";
 
 export var data = {
     name: "test",
 }
 
 export async function execute(message: Message, args: string[], client: Client) {
-    await message.reply("これは隠しコマンドだよ・・？");
+    await reply(message, "これは隠しコマンドだよ・・？");
 }

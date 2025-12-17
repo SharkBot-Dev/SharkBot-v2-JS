@@ -1,5 +1,6 @@
 import { Client, EmbedBuilder, Message, TextChannel, ThreadChannel } from "discord.js";
-import { ExpandSettings } from "../../models/expand.ts";
+import { mongo } from "../../temps/mongodb.ts";
+import { Long } from "mongodb";
 
 const COOLDOWN_TIME_EXPAND = 5;
 const cooldownExpandTime: Record<string, number> = {};
@@ -7,21 +8,36 @@ const cooldownExpandTime: Record<string, number> = {};
 const URL_REGEX =
   /https:\/\/discord\.com\/channels\/(\d+)\/(\d+)\/(\d+)/g;
 
+export async function is_outside_enabled(guildid: Long) {
+  const db = mongo.db("Main");
+  const dbfind = await db.collection("ExpandSettings").findOne({ Guild: guildid });
+  if (!dbfind) return false;
+
+  if (!dbfind.Outside) return false;
+
+  return true;
+}
+
 export async function execute(message: Message, client: Client) {
   if (message.author.bot) return;
   if (!message.content) return;
   if (message.channel.isDMBased()) return;
 
-  const guildId = Number(message.guild?.id);
+  const guildId = new Long(message.guild?.id as string);
+  const guildIdString = guildId.toString();
   if (!guildId) return;
 
-  const dbfind = await ExpandSettings.findOne({ Guild: guildId }).lean();
+  const db = mongo.db("Main");
+
+  const dbfind = await db.collection("ExpandSettings").findOne({ Guild: guildId });
   if (!dbfind) return;
 
+  if (!dbfind.Enabled) return;
+
   const currentTime = Date.now() / 1000;
-  const lastTime = cooldownExpandTime[guildId] ?? 0;
+  const lastTime = cooldownExpandTime[guildIdString] ?? 0;
   if (currentTime - lastTime < COOLDOWN_TIME_EXPAND) return;
-  cooldownExpandTime[guildId] = currentTime;
+  cooldownExpandTime[guildIdString] = currentTime;
 
   const urls = [...message.content.matchAll(URL_REGEX)];
   if (!urls.length) return;
@@ -31,6 +47,10 @@ export async function execute(message: Message, client: Client) {
 
     const guild = client.guilds.cache.get(guild_id);
     if (!guild) continue;
+
+    if (guild.id != message.guild?.id) {
+      if (!(await is_outside_enabled(new Long(guild?.id)))) return;
+    }
 
     const channel = await guild.channels.fetch(channel_id).catch(() => null);
     if (!channel) continue;
@@ -83,6 +103,7 @@ export async function execute(message: Message, client: Client) {
       await message.channel.send({ embeds });
       return;
     } catch (err) {
+      console.error(err)
       await message.react("❌");
       return;
     }
