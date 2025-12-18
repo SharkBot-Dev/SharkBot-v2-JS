@@ -1,6 +1,10 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { connect } from "./src/temps/mongodb.js";
 
+import { config } from "dotenv";
+
+config();
+
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences, GatewayIntentBits.MessageContent],
 });

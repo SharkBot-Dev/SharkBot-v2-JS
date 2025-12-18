@@ -1,7 +1,11 @@
 import { ShardingManager } from "discord.js";
 
+import { config } from "dotenv";
+
+config();
+
 const manager = new ShardingManager("./dist/shard.js", {
-  token: process.env.DISCORD_TOKEN!,
+  token: process.env.TOKEN,
   totalShards: "auto",
   respawn: true,
   shardArgs: ["--color"],
