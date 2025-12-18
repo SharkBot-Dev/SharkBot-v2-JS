@@ -12,7 +12,8 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         interaction.member.permissions.has(PermissionFlagsBits.ManageChannels) === false
     ) {
         return await interaction.reply({
-            embeds: [(await error_embed("このコマンドの実行にはチャンネルの管理権限が必要です。"))]
+            embeds: [((await error_embed("あなたに権限がありません。")).setDescription("必要な権限: チャンネルの管理"))],
+            flags: [MessageFlags.Ephemeral]
         });
     }
 
